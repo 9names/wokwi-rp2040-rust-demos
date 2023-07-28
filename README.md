@@ -5,5 +5,7 @@ This is bunch of Rust projects tested locally on real hardware, to use for impro
 ## Working
 - spi-blocking-sdcard
 
+## Partially working
+- i2c-blocking-ssd1306 (only at opt-level 0)
+
 ## Not Working
-- i2c-blocking-ssd1306

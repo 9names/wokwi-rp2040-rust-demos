@@ -1,1 +1,1 @@
-cargo objcopy --release -- -O ihex project.hex
+cargo objcopy -- -O ihex project.hex

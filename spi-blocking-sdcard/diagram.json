@@ -1,0 +1,24 @@
+{
+    "version": 1,
+    "author": "Uri Shaked",
+    "editor": "wokwi",
+    "serialMonitor": {
+        "display": "auto",
+        "newline": "lf",
+        "convertEol": false
+    },
+    "parts": [
+        { "type": "wokwi-pi-pico", "id": "pico", "top": 20, "left": 60 },
+        { "type": "wokwi-microsd-card", "id": "sd1", "top": 90.0, "left": 200.00, "attrs": {} }
+    ],
+    "connections": [
+        [ "$serialMonitor:RX", "pico:GP0", "", [] ],
+        [ "$serialMonitor:TX", "pico:GP1", "", [] ],
+        [ "pico:GND.8","sd1:GND", "black", [ "h27.41", "v-0.2", "h147.87", "v67.44" ] ],
+        [ "pico:3V3", "sd1:VCC", "red", [ "h32.76", "v-0.38", "h156.77", "v67.59" ] ],
+        [ "pico:GP17", "sd1:CS", "purple", [ "h30.08", "v0.4", "h141.84", "v-48.31" ] ],
+        [ "pico:GP18", "sd1:SCK", "blue", [ "h21.18", "v0.07", "h157.94", "v-57.51" ] ],
+        [ "pico:GP20", "sd1:DO", "green", [ "h45.23", "v-86.1", "h114.36", "v28.54" ] ],
+        [ "pico:GP19", "sd1:DI", "yellow", [ "h79.92", "v0.41", "h81.99", "v-19.73" ] ]
+    ]
+}

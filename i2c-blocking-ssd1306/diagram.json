@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "author": "Uri Shaked",
+    "editor": "wokwi",
+    "serialMonitor": {
+        "display": "auto",
+        "newline": "lf",
+        "convertEol": false
+    },
+    "parts": [
+        { "type": "wokwi-pi-pico", "id": "pico", "top": 20, "left": 60 },
+        { "type": "board-ssd1306", "id": "ssd1306", "top": 320, "left": 200, "attrs": {} }
+    ],
+    "connections": [
+        [ "$serialMonitor:RX", "pico:GP0", "", [] ],
+        [ "$serialMonitor:TX", "pico:GP1", "", [] ],
+        [ "pico:GND.8","ssd1306:GND", "black", [] ],
+        [ "pico:3V3", "ssd1306:VCC", "red", [] ],
+        [ "pico:GP8", "ssd1306:SDA", "blue", [] ],
+        [ "pico:GP9", "ssd1306:SCL", "purple", [] ]
+    ]
+}

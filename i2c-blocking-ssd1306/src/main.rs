@@ -4,11 +4,11 @@
 #![feature(panic_info_message)]
 
 use embassy_executor::Spawner;
-use embassy_rp::{gpio, uart, i2c};
+use embassy_rp::{gpio, i2c, uart};
 use embassy_time::{Duration, Timer};
 use gpio::{Level, Output};
-use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 use panic_halt as _;
+use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
@@ -23,13 +23,19 @@ async fn main(_spawner: Spawner) {
     let sda = p.PIN_8;
     let scl = p.PIN_9;
 
-    let interface = I2CDisplayInterface::new(i2c::I2c::new_blocking(p.I2C0, scl, sda, i2c::Config::default()));
-    let mut display = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0).into_terminal_mode();
+    let interface = I2CDisplayInterface::new(i2c::I2c::new_blocking(
+        p.I2C0,
+        scl,
+        sda,
+        i2c::Config::default(),
+    ));
+    let mut display =
+        Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0).into_terminal_mode();
     display.init().unwrap();
     let _ = display.clear();
-    
+
     for char in "Display works!".chars() {
-        let _ = display.print_char(char);    
+        let _ = display.print_char(char);
     }
 
     loop {

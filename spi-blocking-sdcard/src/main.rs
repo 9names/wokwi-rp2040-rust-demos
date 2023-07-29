@@ -10,8 +10,8 @@ use gpio::{Level, Output};
 use panic_halt as _;
 
 use embedded_sdmmc;
-use ufmt;
 use heapless;
+use ufmt;
 #[embassy_executor::main]
 async fn main(_spawner: Spawner) {
     let p = embassy_rp::init(Default::default());
@@ -35,7 +35,8 @@ async fn main(_spawner: Spawner) {
     let sdcard = embedded_sdmmc::SdCard::new(sdmmc_spi, spi_cs, Delay);
     let size = sdcard.num_bytes().unwrap();
     let mut sdcard_size_string: heapless::String<16> = heapless::String::new();
-    uart.blocking_write("SD card reported size: ".as_bytes()).unwrap();
+    uart.blocking_write("SD card reported size: ".as_bytes())
+        .unwrap();
     ufmt::uwrite!(&mut sdcard_size_string, "{}", size).unwrap();
     uart.blocking_write(sdcard_size_string.as_bytes()).unwrap();
     uart.blocking_write(" bytes\r\n".as_bytes()).unwrap();

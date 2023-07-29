@@ -1,0 +1,9 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+# runner = "probe-rs flash --chip RP2040 --protocol swd --probe 2e8a:000c"
+runner = "probe-rs download --chip RP2040 --protocol swd --probe 2e8a:000c"
+
+[build]
+target = "thumbv6m-none-eabi"        # Cortex-M0 and Cortex-M0+
+
+[env]
+DEFMT_LOG = "debug"

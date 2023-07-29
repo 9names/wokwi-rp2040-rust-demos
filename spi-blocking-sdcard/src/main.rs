@@ -30,10 +30,16 @@ async fn main(_spawner: Spawner) {
     // create SPI
     let mut config = spi::Config::default();
     config.frequency = 400_000;
-
     let sdmmc_spi = spi::Spi::new_blocking(p.SPI0, spi_clk, spi_tx, spi_rx, config);
 
     let sdcard = embedded_sdmmc::SdCard::new(sdmmc_spi, spi_cs, Delay);
+    let size = sdcard.num_bytes().unwrap();
+    let mut sdcard_size_string: heapless::String<16> = heapless::String::new();
+    uart.blocking_write("SD card reported size: ".as_bytes()).unwrap();
+    ufmt::uwrite!(&mut sdcard_size_string, "{}", size).unwrap();
+    uart.blocking_write(sdcard_size_string.as_bytes()).unwrap();
+    uart.blocking_write(" bytes\r\n".as_bytes()).unwrap();
+
     let t = sdcard.get_card_type();
     let sd_success = match t {
         Some(c) => match c {
@@ -43,15 +49,9 @@ async fn main(_spawner: Spawner) {
         },
         None => "Failed to get card type\r\n",
     };
-
+    uart.blocking_write("SD card type: ".as_bytes()).unwrap();
     uart.blocking_write(sd_success.as_bytes()).unwrap();
 
-    let size = sdcard.num_bytes().unwrap();
-    let mut stri: heapless::String<16> = heapless::String::new();
-    uart.blocking_write("SD card reported size: ".as_bytes()).unwrap();
-    ufmt::uwrite!(&mut stri, "{}", size).unwrap();
-    uart.blocking_write(stri.as_bytes()).unwrap();
-    uart.blocking_write(" bytes\r\n".as_bytes()).unwrap();
     loop {
         led.set_high();
         uart.blocking_write("LED on\r\n".as_bytes()).unwrap();
